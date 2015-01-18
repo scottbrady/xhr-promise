@@ -86,3 +86,7 @@ xhrPromise.send({...})
     var xhr = xhrPromise.getXHR();
   });
 ```
+
+## License
+
+MIT

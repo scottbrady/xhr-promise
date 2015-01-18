@@ -1,0 +1,49 @@
+{
+  "name": "xhr-promise",
+  "version": "1.0.0",
+  "description": "Wrap the XMLHttpRequest object with Promise/A+ compliant promises.",
+  "author": {
+    "name": "Scott Brady",
+    "email": "scott@sbrady.com"
+  },
+  "keywords": [
+    "xmlhttprequest",
+    "xhr",
+    "promise",
+    "promises",
+    "promises-a",
+    "promises-aplus",
+    "async",
+    "deferred",
+    "deferreds",
+    "es6",
+    "es6-promise"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/scottbrady/xhr-promise"
+  },
+  "main": "./index.js",
+  "engines": {
+    "node": "*"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/scottbrady/xhr-promise/blob/master/LICENSE"
+  },
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/scottbrady/xhr-promise/issues"
+  },
+  "homepage": "https://github.com/scottbrady/xhr-promise",
+  "dependencies": {
+    "bluebird": "~2.7.1",
+    "extend": "~2.0.0"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.8.0",
+    "grunt": "~0.4.5",
+    "grunt-cli": "~0.1.13",
+    "grunt-contrib-coffee": "~0.12.0"
+  }
+}

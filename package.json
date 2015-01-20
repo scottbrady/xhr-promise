@@ -52,5 +52,8 @@
     "mocha": "~2.1.0",
     "mocha-phantomjs": "~3.5.3",
     "should": "~4.6.1"
+  },
+  "scripts": {
+    "test": "grunt test"
   }
 }

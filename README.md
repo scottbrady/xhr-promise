@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/scottbrady/xhr-promise.svg?branch=master)](https://travis-ci.org/scottbrady/xhr-promise)
 [![NPM version](https://badge.fury.io/js/xhr-promise.svg)](http://badge.fury.io/js/xhr-promise)
 
 # xhr-promise

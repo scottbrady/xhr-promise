@@ -1,5 +1,12 @@
-Promise = require 'bluebird'
-extend  = require 'extend'
+###
+# Copyright 2015 Scott Brady
+# MIT License
+# https://github.com/scottbrady/xhr-promise/blob/master/LICENSE
+###
+
+Promise      = require 'bluebird'
+extend       = require 'extend'
+ParseHeaders = require 'parse-headers'
 
 ###
 # Module to wrap an XMLHttpRequest in a promise.
@@ -16,7 +23,7 @@ module.exports = class XMLHttpRequestPromise
   #
   # Create the XHR object and wire up event handlers to use a promise.
   ###
-  send: (options) ->
+  send: (options={}) ->
     defaults =
       method   : 'GET'
       data     : null
@@ -25,15 +32,15 @@ module.exports = class XMLHttpRequestPromise
       username : null
       password : null
 
-    options = extend({}, options, defaults)
+    options = extend({}, defaults, options)
 
     new Promise (resolve, reject) =>
       if !XMLHttpRequest
-        @_handleError 'error', reject, null, "browser doesn't support XMLHttpRequest"
+        @_handleError 'browser', reject, null, "browser doesn't support XMLHttpRequest"
         return
 
       if typeof options.url isnt 'string' || options.url.length is 0
-        @_handleError 'error', reject, null, 'URL is a required parameter'
+        @_handleError 'url', reject, null, 'URL is a required parameter'
         return
 
       # XMLHttpRequest is supported by IE 7+
@@ -43,11 +50,18 @@ module.exports = class XMLHttpRequestPromise
       xhr.onload = =>
         @_detachWindowUnload()
 
+        try
+          responseText = @_getResponseText()
+        catch
+          @_handleError 'parse', reject, null, 'invalid JSON response'
+          return
+
         resolve(
+          url          : @_getResponseUrl()
           status       : xhr.status
           statusText   : xhr.statusText
-          responseText : xhr.responseText
-          headers      : xhr.getAllResponseHeaders()
+          responseText : responseText
+          headers      : @_getHeaders()
           xhr          : xhr
         )
 
@@ -60,13 +74,15 @@ module.exports = class XMLHttpRequestPromise
 
       xhr.open(options.method, options.url, options.async, options.username, options.password)
 
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8') if options.data?
+
       for header, value of options.headers
         xhr.setRequestHeader(header, value)
 
       try
         xhr.send(options.data)
       catch e
-        @_handleError 'error', reject, null, e.toString()
+        @_handleError 'send', reject, null, e.toString()
 
   ###
   # XMLHttpRequestPromise.getXHR() -> XMLHttpRequest
@@ -77,23 +93,6 @@ module.exports = class XMLHttpRequestPromise
   ##########################################################################
   ## Psuedo-private methods ###############################################
   ########################################################################
-
-  ###
-  # XMLHttpRequestPromise._handleError(reason, reject, status, statusText)
-  # - reason (String)
-  # - reject (Function)
-  # - status (String)
-  # - statusText (String)
-  ###
-  _handleError: (reason, reject, status, statusText) ->
-    @_detachWindowUnload()
-
-    reject(
-      reason     : reason
-      status     : status || @_xhr.status
-      statusText : statusText || @_xhr.statusText
-      xhr        : @_xhr
-    )
 
   ###
   # XMLHttpRequestPromise._attachWindowUnload()
@@ -112,6 +111,58 @@ module.exports = class XMLHttpRequestPromise
   ###
   _detachWindowUnload: () ->
     window.detachEvent 'onunload', @_unloadHandler if window.detachEvent
+
+  ###
+  # XMLHttpRequestPromise._getHeaders() -> Object
+  ###
+  _getHeaders: () ->
+    ParseHeaders(@_xhr.getAllResponseHeaders())
+
+  ###
+  # XMLHttpRequestPromise._getResponseText() -> Mixed
+  #
+  # Parses response text JSON if present.
+  ###
+  _getResponseText: () ->
+    # Accessing binary-data responseText throws an exception in IE9
+    responseText = if typeof @_xhr.responseText is 'string' then @_xhr.responseText else ''
+
+    switch @_xhr.getResponseHeader('Content-Type')
+      when 'application/json', 'text/javascript'
+        # Workaround Android 2.3 failure to string-cast null input
+        responseText = JSON.parse(responseText + '')
+
+    responseText
+
+  ###
+  # XMLHttpRequestPromise._getResponseUrl() -> String
+  #
+  # Actual response URL after following redirects.
+  ###
+  _getResponseUrl: () ->
+    return @_xhr.responseURL if @_xhr.responseURL?
+
+    # Avoid security warnings on getResponseHeader when not allowed by CORS
+    return @_xhr.getResponseHeader('X-Request-URL') if /^X-Request-URL:/m.test(@_xhr.getAllResponseHeaders())
+
+    ''
+
+  ###
+  # XMLHttpRequestPromise._handleError(reason, reject, status, statusText)
+  # - reason (String)
+  # - reject (Function)
+  # - status (String)
+  # - statusText (String)
+  ###
+  _handleError: (reason, reject, status, statusText) ->
+    @_detachWindowUnload()
+
+    reject(
+      reason     : reason
+      status     : status || @_xhr.status
+      statusText : statusText || @_xhr.statusText
+      xhr        : @_xhr
+    )
 
   ###
   # XMLHttpRequestPromise._handleWindowUnload()

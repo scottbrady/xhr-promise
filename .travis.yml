@@ -3,3 +3,7 @@ node_js:
 - '0.10'
 script:
 - npm test
+env:
+  global:
+    - secure: wI6B2oCusEW/GbK8sv6vM3SSRcqV7kHXUsRZMCut4+6KJgH1e8Cb4ouDScJGHJMKglOeDYO5j0cFRCH/ZPq+UCSUmeJpRxDcd7ys2EAMI1+ENF5erxS6if+9fqBtnvX8kyUQqwQ7cYB1W6fTihs87KVhzjJSL3K21OUfPcDKuFo=
+    - secure: uOMobf7VikKCvgWheQVfwkFRZfr0pxrzg7u4gizijq+cEk9FfojRQZq5lWr3tAWptEjEnIQGlj3NKbB7XnYr6qCdl1IdtKeQBDFXn5Wg42w2UqpCdt7lHtU4uteANiuOYSuDDA6QkLhxzhkq/zPU8DoCYFIvxURK0dKi6rqw5E8=

@@ -56,6 +56,6 @@
   },
   "scripts": {
     "test": "grunt test",
-    "zuul": "zuul -- ./test/cases/*.test.js"
+    "zuul": "zuul -- ./test/cases/*_test.js"
   }
 }

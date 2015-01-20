@@ -87,6 +87,13 @@ xhrPromise.send({...})
   });
 ```
 
+## Running the tests
+
+```
+$ npm install
+$ grunt test
+```
+
 ## License
 
 MIT

@@ -51,9 +51,11 @@
     "grunt-shell": "~1.1.1",
     "mocha": "~2.1.0",
     "mocha-phantomjs": "~3.5.3",
-    "should": "~4.6.1"
+    "should": "~4.6.1",
+    "zuul": "~1.16.5"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "zuul": "zuul -- ./test/cases/*.test.js"
   }
 }

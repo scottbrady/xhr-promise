@@ -3,6 +3,8 @@
 
 # xhr-promise
 
+[![Selenium Test Status](https://saucelabs.com/browser-matrix/scottbrady.svg)](https://saucelabs.com/u/scottbrady)
+
 This module wraps the [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest)
 object with [Promise/A+](https://promisesaplus.com/) compliant promises.
 The promise implementation is provided by the [bluebird](https://github.com/petkaantonov/bluebird) promise library.

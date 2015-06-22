@@ -74,7 +74,13 @@ module.exports = class XMLHttpRequestPromise
 
       xhr.open(options.method, options.url, options.async, options.username, options.password)
 
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8') if options.data?
+      if options.data?
+        if options.headers['Content-Type']
+          contentType = options.headers['Content-Type']
+          delete options.headers['Content-Type']
+        else
+          contentType = 'application/x-www-form-urlencoded; charset=UTF-8'
+        xhr.setRequestHeader('Content-Type', contentType)
 
       for header, value of options.headers
         xhr.setRequestHeader(header, value)

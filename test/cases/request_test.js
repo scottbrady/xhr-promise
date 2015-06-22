@@ -80,7 +80,7 @@ describe('request', function () {
       });
   });
 
-  it('should set content-type header during POST', function (done) {
+  it('should set default content-type header during POST if not specified by the user', function (done) {
     new XMLHttpRequestPromise()
       .send({
         method: 'POST',
@@ -91,6 +91,24 @@ describe('request', function () {
         response.responseText.method.should.eql('POST');
         response.responseText.data.should.eql('foo=bar');
         response.responseText.headers['content-type'].should.eql('application/x-www-form-urlencoded; charset=UTF-8');
+        done();
+      });
+  });
+
+  it('should set content-type header during POST specified by the user', function (done) {
+    new XMLHttpRequestPromise()
+      .send({
+        method: 'POST',
+        url: '/request',
+        data: '{"foo":"bar"}',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(function (response) {
+        response.responseText.method.should.eql('POST');
+        response.responseText.data.should.eql('{"foo":"bar"}');
+        response.responseText.headers['content-type'].should.eql('application/json');
         done();
       });
   });

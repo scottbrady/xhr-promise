@@ -13,6 +13,8 @@ ParseHeaders = require 'parse-headers'
 ###
 module.exports = class XMLHttpRequestPromise
 
+  @DEFAULT_CONTENT_TYPE: 'application/x-www-form-urlencoded; charset=UTF-8'
+
   ##########################################################################
   ## Public methods #######################################################
   ########################################################################
@@ -27,7 +29,7 @@ module.exports = class XMLHttpRequestPromise
     defaults =
       method   : 'GET'
       data     : null
-      headers  : []
+      headers  : {}
       async    : true
       username : null
       password : null
@@ -74,13 +76,8 @@ module.exports = class XMLHttpRequestPromise
 
       xhr.open(options.method, options.url, options.async, options.username, options.password)
 
-      if options.data?
-        if options.headers['Content-Type']
-          contentType = options.headers['Content-Type']
-          delete options.headers['Content-Type']
-        else
-          contentType = 'application/x-www-form-urlencoded; charset=UTF-8'
-        xhr.setRequestHeader('Content-Type', contentType)
+      if options.data? && !options.headers['Content-Type']
+        options.headers['Content-Type'] = @constructor.DEFAULT_CONTENT_TYPE
 
       for header, value of options.headers
         xhr.setRequestHeader(header, value)

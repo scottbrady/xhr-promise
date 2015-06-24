@@ -27,12 +27,13 @@ module.exports = class XMLHttpRequestPromise
   ###
   send: (options={}) ->
     defaults =
-      method   : 'GET'
-      data     : null
-      headers  : {}
-      async    : true
-      username : null
-      password : null
+      method          : 'GET'
+      data            : null
+      headers         : {}
+      async           : true
+      username        : null
+      password        : null
+      withCredentials : false
 
     options = extend({}, defaults, options)
 
@@ -75,6 +76,9 @@ module.exports = class XMLHttpRequestPromise
       @_attachWindowUnload()
 
       xhr.open(options.method, options.url, options.async, options.username, options.password)
+
+      if options.withCredentials
+        xhr.withCredentials = true
 
       if options.data? && !options.headers['Content-Type']
         options.headers['Content-Type'] = @constructor.DEFAULT_CONTENT_TYPE

@@ -134,7 +134,7 @@ module.exports = class XMLHttpRequestPromise
     # Accessing binary-data responseText throws an exception in IE9
     responseText = if typeof @_xhr.responseText is 'string' then @_xhr.responseText else ''
 
-    switch @_xhr.getResponseHeader('Content-Type')
+    switch (@_xhr.getResponseHeader('Content-Type') || '').split(';')[0]
       when 'application/json', 'text/javascript'
         # Workaround Android 2.3 failure to string-cast null input
         responseText = JSON.parse(responseText + '')

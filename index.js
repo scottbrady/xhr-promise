@@ -1,1 +1,1 @@
-module.exports = require('./lib/xhr-promise');
+module.exports = require('./lib');

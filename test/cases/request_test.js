@@ -1,4 +1,4 @@
-var XMLHttpRequestPromise = require('./xhr-promise');
+var XMLHttpRequestPromise = require('xhr-promise');
 
 // Based on the github/fetch tests
 // https://github.com/github/fetch/tree/master/test

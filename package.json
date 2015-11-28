@@ -37,8 +37,6 @@
   },
   "homepage": "https://github.com/scottbrady/xhr-promise",
   "dependencies": {
-    "bluebird": "~2.9.30",
-    "extend": "~2.0.0",
     "parse-headers": "~2.0.0"
   },
   "devDependencies": {
@@ -51,7 +49,9 @@
     "grunt-shell": "~1.1.1",
     "mocha": "~2.2.5",
     "mocha-phantomjs": "~3.5.3",
+    "object-assign": "^4.0.1",
     "should": "~6.0.3",
+    "zousan": "^2.2.0",
     "zuul": "~3.0.0"
   },
   "scripts": {

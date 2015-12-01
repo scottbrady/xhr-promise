@@ -48,6 +48,10 @@ var routes = {
     var buf = new Buffer([104, 0, 101, 0, 108, 0, 108, 0, 111, 0]);
     res.end(buf);
   },
+  '/with_credentials': function(res) {
+    res.writeHead(200);
+    res.end('hi');
+  },
   '/binary': function(res) {
     res.writeHead(200, {'Content-Type': 'application/octet-stream'});
     var buf = new Buffer(256);

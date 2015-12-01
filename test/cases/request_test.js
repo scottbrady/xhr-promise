@@ -51,6 +51,29 @@ describe('request', function () {
       });
   });
 
+  it('should not set withCredentials by default', function (done) {
+    new XMLHttpRequestPromise()
+      .send({
+        url: '/with_credentials'
+      })
+      .then(function (response) {
+        response.xhr.withCredentials.should.eql(false);
+        done();
+      });
+  });
+
+  it('should allow set withCredentials', function (done) {
+    new XMLHttpRequestPromise()
+      .send({
+        url: '/with_credentials',
+        withCredentials: true
+      })
+      .then(function (response) {
+        response.xhr.withCredentials.should.eql(true);
+        done();
+      });
+  });
+
   it('should populate response body', function (done) {
     new XMLHttpRequestPromise()
       .send({url: '/hello'})

@@ -25,12 +25,13 @@ module.exports = class XMLHttpRequestPromise
   ###
   send: (options={}) ->
     defaults =
-      method   : 'GET'
-      data     : null
-      headers  : {}
-      async    : true
-      username : null
-      password : null
+      method          : 'GET'
+      data            : null
+      headers         : {}
+      async           : true
+      username        : null
+      password        : null
+      withCredentials : false
 
     options = Object.assign({}, defaults, options)
 
@@ -73,6 +74,9 @@ module.exports = class XMLHttpRequestPromise
       @_attachWindowUnload()
 
       xhr.open(options.method, options.url, options.async, options.username, options.password)
+
+      if options.withCredentials
+        xhr.withCredentials = true
 
       if options.data? && !options.headers['Content-Type']
         options.headers['Content-Type'] = @constructor.DEFAULT_CONTENT_TYPE
@@ -128,7 +132,7 @@ module.exports = class XMLHttpRequestPromise
     # Accessing binary-data responseText throws an exception in IE9
     responseText = if typeof @_xhr.responseText is 'string' then @_xhr.responseText else ''
 
-    switch @_xhr.getResponseHeader('Content-Type')
+    switch (@_xhr.getResponseHeader('Content-Type') || '').split(';')[0]
       when 'application/json', 'text/javascript'
         # Workaround Android 2.3 failure to string-cast null input
         responseText = JSON.parse(responseText + '')

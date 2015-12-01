@@ -16,7 +16,8 @@ module.exports = function (grunt) {
           bare: true
         },
         files: {
-          'lib/xhr-promise.js': 'src/xhr-promise.coffee'
+          'lib/index.js':  'src/index.coffee',
+          'lib/bundle.js': 'src/bundle.coffee',
         }
       }
     },
@@ -27,7 +28,7 @@ module.exports = function (grunt) {
         dest: './test/bundle.js',
         options: {
           alias: [
-            './lib/xhr-promise.js:./xhr-promise'
+            './lib/bundle.js:xhr-promise'
           ],
           transform: [
             'coffeeify'

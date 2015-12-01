@@ -4,8 +4,6 @@
 # https://github.com/scottbrady/xhr-promise/blob/master/LICENSE
 ###
 
-Promise      = require 'bluebird'
-extend       = require 'extend'
 ParseHeaders = require 'parse-headers'
 
 ###
@@ -14,6 +12,7 @@ ParseHeaders = require 'parse-headers'
 module.exports = class XMLHttpRequestPromise
 
   @DEFAULT_CONTENT_TYPE: 'application/x-www-form-urlencoded; charset=UTF-8'
+  @Promise: Promise
 
   ##########################################################################
   ## Public methods #######################################################
@@ -34,9 +33,9 @@ module.exports = class XMLHttpRequestPromise
       username : null
       password : null
 
-    options = extend({}, defaults, options)
+    options = Object.assign({}, defaults, options)
 
-    new Promise (resolve, reject) =>
+    new @Promise (resolve, reject) =>
       if !XMLHttpRequest
         @_handleError 'browser', reject, null, "browser doesn't support XMLHttpRequest"
         return

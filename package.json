@@ -1,5 +1,5 @@
 {
-  "name": "xhr-promise",
+  "name": "xhr-promise-es6",
   "version": "1.2.0",
   "description": "Wrap the XMLHttpRequest object with Promise/A+ compliant promises.",
   "author": {

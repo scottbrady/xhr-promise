@@ -4,6 +4,8 @@
 
 * Upgrade module dependencies for Node 4 support.
 * Make ES6 compatible module, use shims in wrapper. (zeekay)
+* Parses Content-Type header to handle encoding when parsing JSON (Mingan).
+* Add support for withCredentials (Mingan).
 
 ## Version 1.2.0, June 22nd, 2015
 

@@ -23,7 +23,7 @@
     "type": "git",
     "url": "git://github.com/scottbrady/xhr-promise"
   },
-  "main": "./index.js",
+  "main": "./lib",
   "engines": {
     "node": "*"
   },

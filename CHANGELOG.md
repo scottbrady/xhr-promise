@@ -1,5 +1,10 @@
 # xhr-promise Changelog
 
+## Version 2.0.0, December 1st, 2015
+
+* Upgrade module dependencies for Node 4 support.
+* Make ES6 compatible module, use shims in wrapper. (zeekay)
+
 ## Version 1.2.0, June 22nd, 2015
 
 * Updated dependencies.

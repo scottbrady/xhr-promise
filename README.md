@@ -5,14 +5,12 @@
 
 This module wraps the [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest)
 object with [Promise/A+](https://promisesaplus.com/) compliant promises.
-The promise implementation is provided by the [bluebird](https://github.com/petkaantonov/bluebird) promise library.
+The promise implementation is provided by the [zousan](https://github.com/bluejava/zousan) promise library.
 
 ## Browser support
 
 Because xhr-promise uses the XMLHttpRequest object this library will work with
-IE7+, Safari 5+ and evergreen browsers (Chrome and Firefox).  You should [read the
-bluebird docs](https://github.com/petkaantonov/bluebird#browser-support) for
-workarounds with promises and IE 7 and IE 8.
+IE7+, Safari 5+ and evergreen browsers (Chrome and Firefox).
 
 ## Installation
 

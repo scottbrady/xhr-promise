@@ -20,6 +20,18 @@ This package is available on npm as:
 npm install xhr-promise
 ```
 
+Then:
+
+```
+var XHRPromise = require('xhr-promise'); //Will require Promise polyfill Zousan (+ ~2kB)
+```
+
+or
+
+```
+var XHRPromise = require('xhr-promise/lib/xhr-promise'); //Use your own Promise polyfill
+```
+
 ## Example
 
 The xhr-promise code in this example does the same thing as the following XMLHttpRequest code.
